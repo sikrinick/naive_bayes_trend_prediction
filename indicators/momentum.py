@@ -15,7 +15,7 @@ class Momentum(Calculable):
             mom = data[i] - data[i - start]
             dates.append(self._data.index.values[i])
             values.append(mom)
-        df = DataFrame(columns={"Momentum": values}, index=dates)
+        df = DataFrame(data={"Momentum": values}, index=dates)
         df.index.name = "Date"
         return df
 

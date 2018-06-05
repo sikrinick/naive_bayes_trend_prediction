@@ -25,4 +25,4 @@ if __name__ == '__main__':
     sma_test()
     ema_test()
     ma_mem_error_test()
-    print("Finished")
+    print("Finished, at least SMA and EMA are correct")
