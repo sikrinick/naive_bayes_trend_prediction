@@ -16,17 +16,11 @@ class Calculable(ABC):
         self._result = None
 
     @property
-    def result(self) -> list:
+    def result(self) -> DataFrame:
         if self._result is None:
             self._result = self.__calc__()
         return self._result
 
     @abstractmethod
     def __calc__(self):
-        data_size = len(self._data)
-        if data_size < self._mem:
-            raise CalculableError("Data size is lower than memory!")
-
-    def _check_specific_field_(self, field: str):
-        if self._column_names is None or getattr(self._column_names, field) is None:
-            raise RuntimeError("No field %s specified!" % field)
+        pass

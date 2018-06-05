@@ -2,10 +2,11 @@ from .calculable import Calculable
 from pandas import DataFrame
 
 
-class LWR(Calculable):
+class ADO(Calculable):
 
     def __calc__(self) -> DataFrame:
 
+        open_data = self._data[self._column_names.open_str]
         low_data = self._data[self._column_names.low_str]
         high_data = self._data[self._column_names.high_str]
         close_data = self._data[self._column_names.close_str]
@@ -13,16 +14,18 @@ class LWR(Calculable):
         dates = []
         values = []
 
-        start = self._mem - 1
-        for i in range(start, len(close_data)):
-            min_price = min(low_data[i - start: i + 1])
-            max_price = max(high_data[i - start: i + 1])
-            stck = (max_price - close_data[i]) / (max_price - min_price)
+        for i in range(len(close_data)):
+
+            open = open_data[i]
+            high = high_data[i]
+            low = low_data[i]
+            close = close_data[i]
+
+            ado = ((high - open) + (close - low)) / (2 * (high - low))
 
             dates.append(self._data.index.values[i])
-            values.append(stck)
+            values.append(ado)
 
-        df = DataFrame(data={"LWR": values}, index=dates)
+        df = DataFrame(data={"ADO": values}, index=dates)
         df.index.name = "Date"
         return df
-
