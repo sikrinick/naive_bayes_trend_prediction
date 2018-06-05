@@ -17,7 +17,7 @@ class STCK(Calculable):
         for i in range(start, len(close_data)):
             min_price = min(low_data[i - start: i + 1])
             max_price = max(high_data[i - start: i + 1])
-            stck = (close_data[i] - min_price) / (max_price - min_price)
+            stck = ((close_data[i] - min_price) / (max_price - min_price)) * 100
 
             dates.append(self._data.index.values[i])
             values.append(stck)

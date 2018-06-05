@@ -14,6 +14,7 @@ class Calculable(ABC):
         self._mem = mem
         self._column_names = column_names
         self._result = None
+        self._trend = None
 
     @property
     def result(self) -> DataFrame:
@@ -21,6 +22,15 @@ class Calculable(ABC):
             self._result = self.__calc__()
         return self._result
 
+    @property
+    def trend(self) -> DataFrame:
+        if self._trend is None:
+            self._trend = self.__strategy__()
+        return self._trend
+
     @abstractmethod
     def __calc__(self):
+        pass
+
+    def __strategy__(self):
         pass

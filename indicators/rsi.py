@@ -37,4 +37,10 @@ class RSI(Calculable):
         return df
 
 
+    #Overpriced - 70
+    #Neutral - 50
+    #Underpriced - 30
+    def __strategy__(self):
+        pass
+
 

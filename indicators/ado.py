@@ -21,7 +21,7 @@ class ADO(Calculable):
             low = low_data[i]
             close = close_data[i]
 
-            ado = ((high - open) + (close - low)) / (2 * (high - low))
+            ado = (((high - open) + (close - low)) / (2 * (high - low))) * 100
 
             dates.append(self._data.index.values[i])
             values.append(ado)
