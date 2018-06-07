@@ -6,6 +6,10 @@ from .columnnames import ColumnNames
 
 class Calculable(ABC):
 
+    BUY = 1
+    HOLD = 0
+    SELL = -1
+
     def __init__(self,
                  data: DataFrame,
                  mem: int = None,
@@ -14,7 +18,7 @@ class Calculable(ABC):
         self._mem = mem
         self._column_names = column_names
         self._result = None
-        self._trend = None
+        self._strategy = None
 
     @property
     def result(self) -> DataFrame:
@@ -23,14 +27,15 @@ class Calculable(ABC):
         return self._result
 
     @property
-    def trend(self) -> DataFrame:
-        if self._trend is None:
-            self._trend = self.__strategy__()
-        return self._trend
+    def strategy(self) -> DataFrame:
+        if self._strategy is None:
+            self._strategy = self.__strategy__()
+        return self._strategy
 
     @abstractmethod
     def __calc__(self):
         pass
 
+    @abstractmethod
     def __strategy__(self):
         pass

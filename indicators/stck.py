@@ -26,3 +26,23 @@ class STCK(Calculable):
         df.index.name = "Date"
         return df
 
+    def __strategy__(self):
+        dates = []
+        strat = []
+
+        for date in self.result.index:
+            value = self.result.loc[date]["STCK"]
+
+            pos = Calculable.HOLD
+            if value < 20:
+                pos = Calculable.BUY
+            elif value > 80:
+                pos = Calculable.SELL
+
+            dates.append(date)
+            strat.append(pos)
+
+        df = DataFrame(data={"STCK": strat}, index=dates)
+        df.index.name = "Date"
+        return df
+

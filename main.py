@@ -1,22 +1,22 @@
-from indicators import ColumnNames, SMA, EMA, Momentum
-from indicators import STCK, STCD, LWR, ADO, CCI, RSI, MACD
+from indicators import *
 import pandas as pd
+import numpy as np
+from tests import run_tests
+import matplotlib.pyplot as plt
 
 
 if __name__ == '__main__':
 
+    run_tests()
+
     main_set = pd.read_csv("data/MA.csv", index_col=0)
-    main_set = main_set
 
     set_size = len(main_set)
 
     training_proc_end = int(0.6 * set_size)
-    testing_proc_end = training_proc_end + int(0.3 * set_size)
-    example_proc_start = testing_proc_end
-
+    testing_proc_start = training_proc_end
     training_set = main_set.iloc[:training_proc_end]
-    testing_set = main_set.iloc[training_proc_end: testing_proc_end]
-    example_set = main_set.iloc[example_proc_start:]
+    testing_set = main_set.iloc[testing_proc_start:]
 
     column_names = ColumnNames(
         open_str="Open",
@@ -28,14 +28,36 @@ if __name__ == '__main__':
 
     memory = 10
 
-    results = {}
+    # For testing purposes
+    # sma = SMA(training_set, memory, column_names).result
+    # ema = EMA(training_set, memory, column_names).result
+    # mom = Momentum(training_set, memory, column_names).result
 
-    for classname in (SMA, EMA, Momentum, STCK,
-                      LWR, ADO, CCI, RSI, MACD):
-        results[classname.__name__] = \
-            classname(training_set, memory, column_names).result
+    stck = STCK(training_set, memory, column_names)
+    stcd = STCD(stck.result, memory)
+    lwr = LWR(training_set, memory, column_names)
+    # ado = ADO(training_set, memory, column_names).result
+    cci = CCI(training_set, memory, column_names)
+    rsi = RSI(training_set, memory, column_names)
+    # macd = MACD(training_set, memory, column_names).result
 
-    results[STCD.__name__] = STCD(results[STCK.__name__], memory).result
+    df = stck.strategy\
+        .join(stcd.strategy)\
+        .join(lwr.strategy)\
+        .join(cci.strategy)\
+        .join(rsi.strategy)
 
-    for result in results.values():
-        print(result.iloc[-1])
+    df.dropna(inplace=True)
+
+
+    for idx, row in df.iterrows():
+        #calculate profits
+
+        pass
+
+
+
+
+
+
+

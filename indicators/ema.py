@@ -5,7 +5,7 @@ from pandas import DataFrame
 class EMA(Calculable):
 
     def __calc__(self) -> DataFrame:
-        data = self._data[self._column_names.adj_close_str]
+        data = self._data[self._column_names.adj_close_str].values
         start = self._mem - 1
         data_size = len(data)
         dates = []
@@ -24,4 +24,8 @@ class EMA(Calculable):
         df = DataFrame(data={"EMA": values}, index=dates)
         df.index.name = "Date"
         return df
+
+    def __strategy__(self):
+        # No strategy
+        pass
 

@@ -36,11 +36,22 @@ class RSI(Calculable):
         df.index.name = "Date"
         return df
 
-
-    #Overpriced - 70
-    #Neutral - 50
-    #Underpriced - 30
     def __strategy__(self):
-        pass
+        dates = []
+        strat = []
 
+        for date in self.result.index:
+            value = self.result.loc[date]["RSI"]
 
+            pos = Calculable.HOLD
+            if value < 20:
+                pos = Calculable.BUY
+            elif value > 80:
+                pos = Calculable.SELL
+
+            dates.append(date)
+            strat.append(pos)
+
+        df = DataFrame(data={"RSI": strat}, index=dates)
+        df.index.name = "Date"
+        return df

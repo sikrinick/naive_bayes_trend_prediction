@@ -21,3 +21,6 @@ class SMA(Calculable):
         df.index.name = "Date"
         return df
 
+    def __strategy__(self):
+        # No strat
+        pass

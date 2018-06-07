@@ -40,3 +40,23 @@ class CCI(Calculable):
         df = DataFrame(data={"CCI": values}, index=dates)
         df.index.name = "Date"
         return df
+
+    def __strategy__(self):
+        dates = []
+        strat = []
+
+        for date in self.result.index:
+            value = self.result.loc[date]["CCI"]
+
+            pos = Calculable.HOLD
+            if value < -100:
+                pos = Calculable.BUY
+            elif value > 100:
+                pos = Calculable.SELL
+
+            dates.append(date)
+            strat.append(pos)
+
+        df = DataFrame(data={"CCI": strat}, index=dates)
+        df.index.name = "Date"
+        return df
