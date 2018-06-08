@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-from pandas import DataFrame
-from .calculable_error import CalculableError
-from .columnnames import ColumnNames
+from pandas import DataFrame, Series
+from utils.columnnames import ColumnNames
 
 
 class Calculable(ABC):
@@ -21,13 +20,13 @@ class Calculable(ABC):
         self._strategy = None
 
     @property
-    def result(self) -> DataFrame:
+    def result(self) -> Series:
         if self._result is None:
             self._result = self.__calc__()
         return self._result
 
     @property
-    def strategy(self) -> DataFrame:
+    def strategy(self) -> Series:
         if self._strategy is None:
             self._strategy = self.__strategy__()
         return self._strategy

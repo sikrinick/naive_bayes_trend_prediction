@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class ADO(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
 
         open_data = self._data[self._column_names.open_str]
         low_data = self._data[self._column_names.low_str]
@@ -26,6 +26,6 @@ class ADO(Calculable):
             dates.append(self._data.index.values[i])
             values.append(ado)
 
-        df = DataFrame(data={"ADO": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df

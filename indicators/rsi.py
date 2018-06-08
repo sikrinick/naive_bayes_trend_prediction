@@ -1,12 +1,12 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import DataFrame, Series
 from .ema import EMA
-from .columnnames import ColumnNames
+from utils.columnnames import ColumnNames
 
 
 class RSI(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
         close_data = self._data[self._column_names.close_str]
         Us = []
         Ds = []
@@ -18,7 +18,6 @@ class RSI(Calculable):
         u_ema = EMA(DataFrame({"U": Us}), self._mem, column_names=ColumnNames(adj_close_str="U")).result
         d_ema = EMA(DataFrame({"D": Ds}), self._mem, column_names=ColumnNames(adj_close_str="D")).result
 
-
         dates = []
         values = []
 
@@ -26,22 +25,22 @@ class RSI(Calculable):
         for i in range(start, len(close_data)):
             date = self._data.index.values[i]
 
-            rs = u_ema["EMA"].values[i-start] / d_ema["EMA"].values[i-start]
+            rs = u_ema.values[i-start] / d_ema.values[i-start]
             rsi = 100 - (100 / (1 + rs))
 
             dates.append(date)
             values.append(rsi)
 
-        df = DataFrame(data={"RSI": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 
-    def __strategy__(self):
+    def __strategy__(self) -> Series:
         dates = []
         strat = []
 
         for date in self.result.index:
-            value = self.result.loc[date]["RSI"]
+            value = self.result.loc[date]
 
             pos = Calculable.HOLD
             if value < 20:
@@ -52,6 +51,6 @@ class RSI(Calculable):
             dates.append(date)
             strat.append(pos)
 
-        df = DataFrame(data={"RSI": strat}, index=dates)
+        df = Series(data=strat, index=dates)
         df.index.name = "Date"
         return df

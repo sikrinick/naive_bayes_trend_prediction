@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class LWR(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
 
         low_data = self._data[self._column_names.low_str]
         high_data = self._data[self._column_names.high_str]
@@ -22,16 +22,16 @@ class LWR(Calculable):
             dates.append(self._data.index.values[i])
             values.append(lwr)
 
-        df = DataFrame(data={"LWR": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 
-    def __strategy__(self):
+    def __strategy__(self) -> Series:
         dates = []
         strat = []
 
         for date in self.result.index:
-            value = self.result.loc[date]["LWR"]
+            value = self.result.loc[date]
 
             pos = Calculable.HOLD
             if value < -80:
@@ -42,7 +42,7 @@ class LWR(Calculable):
             dates.append(date)
             strat.append(pos)
 
-        df = DataFrame(data={"LWR": strat}, index=dates)
+        df = Series(data=strat, index=dates)
         df.index.name = "Date"
         return df
 

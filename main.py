@@ -1,23 +1,10 @@
-from indicators import *
 import pandas as pd
-import numpy as np
-from tests import run_tests
-import matplotlib.pyplot as plt
-
+from utils import ColumnNames
+from predictors import Strategy
 
 if __name__ == '__main__':
 
-    run_tests()
-
     main_set = pd.read_csv("data/MA.csv", index_col=0)
-
-    set_size = len(main_set)
-
-    training_proc_end = int(0.6 * set_size)
-    testing_proc_start = training_proc_end
-    training_set = main_set.iloc[:training_proc_end]
-    testing_set = main_set.iloc[testing_proc_start:]
-
     column_names = ColumnNames(
         open_str="Open",
         close_str="Close",
@@ -25,35 +12,23 @@ if __name__ == '__main__':
         high_str="High",
         adj_close_str="Adj Close",
         volume_str="Volume")
-
+    money = 100000
+    amount = 100
+    training_percent = 80
     memory = 10
+    transaction_cost_percent = 0.05
 
-    # For testing purposes
-    # sma = SMA(training_set, memory, column_names).result
-    # ema = EMA(training_set, memory, column_names).result
-    # mom = Momentum(training_set, memory, column_names).result
+    strat = Strategy(main_set,
+                     column_names,
+                     money,
+                     amount,
+                     transaction_cost_percent,
+                     training_percent,
+                     memory)
 
-    stck = STCK(training_set, memory, column_names)
-    stcd = STCD(stck.result, memory)
-    lwr = LWR(training_set, memory, column_names)
-    # ado = ADO(training_set, memory, column_names).result
-    cci = CCI(training_set, memory, column_names)
-    rsi = RSI(training_set, memory, column_names)
-    # macd = MACD(training_set, memory, column_names).result
-
-    df = stck.strategy\
-        .join(stcd.strategy)\
-        .join(lwr.strategy)\
-        .join(cci.strategy)\
-        .join(rsi.strategy)
-
-    df.dropna(inplace=True)
+    strat.run()
 
 
-    for idx, row in df.iterrows():
-        #calculate profits
-
-        pass
 
 
 

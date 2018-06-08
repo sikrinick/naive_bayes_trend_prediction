@@ -1,4 +1,3 @@
-from .columnnames import *
 from .calculable import *
 from .calculable_error import *
 

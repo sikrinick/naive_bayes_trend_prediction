@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class SMA(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
 
         data = self._data[self._column_names.adj_close_str]
         data_size = len(data)
@@ -17,7 +17,7 @@ class SMA(Calculable):
             ma = sum(data[i - start: i + 1]) / self._mem
             dates.append(self._data.index.values[i])
             values.append(ma)
-        df = DataFrame(data={"SMA": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 

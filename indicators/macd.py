@@ -1,12 +1,12 @@
 from .calculable import Calculable
 from .ema import EMA
-from .columnnames import ColumnNames
-from pandas import DataFrame
+from utils.columnnames import ColumnNames
+from pandas import Series
 
 
 class MACD(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
 
         slow_ema = EMA(self._data, 26, self._column_names).result
         fast_ema = EMA(self._data, 12, self._column_names).result

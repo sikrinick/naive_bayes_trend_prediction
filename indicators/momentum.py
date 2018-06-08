@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class Momentum(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
         data = self._data[self._column_names.adj_close_str]
         dates = []
         values = []
@@ -15,7 +15,7 @@ class Momentum(Calculable):
             mom = data[i] - data[i - start]
             dates.append(self._data.index.values[i])
             values.append(mom)
-        df = DataFrame(data={"Momentum": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 

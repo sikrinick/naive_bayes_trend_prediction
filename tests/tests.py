@@ -8,7 +8,7 @@ def sma_test(column_names):
     sma_df = DataFrame(data={"Test": sma_data}, index=sma_dates)
     sma_df.index.name = "Date"
     sma = SMA(sma_df, 5, column_names)
-    assert list(sma.result["SMA"].values) == [13, 14, 15]
+    assert list(sma.result.values) == [13, 14, 15]
 
 
 def ema_test(column_names):
@@ -17,7 +17,7 @@ def ema_test(column_names):
     ema_df = DataFrame(data={"Test": ema_data}, index=ema_dates)
     ema_df.index.name = "Date"
     ema = EMA(ema_df, 4, column_names)
-    assert list(ema.result["EMA"].values) == [6.75, 6.13]
+    assert list(ema.result.values) == [6.75, 6.13]
 
 
 def ma_mem_error_test(column_names):

@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class EMA(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
         data = self._data[self._column_names.adj_close_str].values
         start = self._mem - 1
         data_size = len(data)
@@ -21,7 +21,7 @@ class EMA(Calculable):
             dates.append(self._data.index.values[i])
             values.append(ema)
 
-        df = DataFrame(data={"EMA": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 

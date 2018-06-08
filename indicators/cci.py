@@ -1,10 +1,10 @@
 from .calculable import Calculable
-from pandas import DataFrame
+from pandas import Series
 
 
 class CCI(Calculable):
 
-    def __calc__(self) -> DataFrame:
+    def __calc__(self) -> Series:
         high_data = self._data[self._column_names.high_str]
         low_data = self._data[self._column_names.low_str]
         close_data = self._data[self._column_names.close_str]
@@ -37,7 +37,7 @@ class CCI(Calculable):
             dates.append(self._data.index.values[i])
             values.append(coef)
 
-        df = DataFrame(data={"CCI": values}, index=dates)
+        df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
 
@@ -46,7 +46,7 @@ class CCI(Calculable):
         strat = []
 
         for date in self.result.index:
-            value = self.result.loc[date]["CCI"]
+            value = self.result.loc[date]
 
             pos = Calculable.HOLD
             if value < -100:
@@ -57,6 +57,6 @@ class CCI(Calculable):
             dates.append(date)
             strat.append(pos)
 
-        df = DataFrame(data={"CCI": strat}, index=dates)
+        df = Series(data=strat, index=dates)
         df.index.name = "Date"
         return df

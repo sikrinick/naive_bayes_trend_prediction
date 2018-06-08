@@ -1,4 +1,3 @@
-
 class ColumnNames:
 
     def __init__(self,

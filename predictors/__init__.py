@@ -1,2 +1,1 @@
-from .nbc import NaiveBayesClassifier
-from .weighter import Weighter
+from .strategy import Strategy
