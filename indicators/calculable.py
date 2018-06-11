@@ -12,7 +12,7 @@ class Calculable(ABC):
     def __init__(self,
                  data: DataFrame,
                  mem: int = None,
-                 column_names: ColumnNames= None):
+                 column_names: ColumnNames = None):
         self._data = data
         self._mem = mem
         self._column_names = column_names

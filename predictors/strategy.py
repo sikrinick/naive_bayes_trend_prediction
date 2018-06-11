@@ -24,6 +24,8 @@ class Strategy:
         self.default_memories = default_memories
         self.risk_free_rate = risk_free_rate
 
+    l = [x for x in range(10) if x % 2 != 0]
+
     def run(self):
         run_tests()
 
@@ -87,6 +89,9 @@ class Strategy:
         print("\n")
         print("Testing result: %f" % result)
         print("Testing sharpe: %f" % self.sharpe(changes))
+    def sharpe(self, changes):
+        rets = (sum(changes) / len(changes) / self.starting_money) * 100 + 100
+        return (rets - self.risk_free_rate) / std(changes) * 1000
 
     def run_strat(self, prices, indicator):
         money = self.starting_money
@@ -114,6 +119,3 @@ class Strategy:
                     money -= order_expense
         return Series(data=changes, index=dates)
 
-    def sharpe(self, changes):
-        rets = (sum(changes) + self.starting_money) / self.starting_money
-        return (rets + 100 - self.risk_free_rate) / std(changes) * 1000
