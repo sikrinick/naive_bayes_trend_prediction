@@ -14,6 +14,10 @@ class MACD(Calculable):
 
         return EMA(slow_ema - fast_ema, self._mem, column_names=ColumnNames(adj_close_str="EMA")).result
 
+    def __trend__(self):
+        # TODO ADD TREND
+        pass
+
     def __strategy__(self):
         # TODO ADD STRATEGY
         pass

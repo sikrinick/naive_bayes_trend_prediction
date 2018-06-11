@@ -10,6 +10,10 @@ class STCD(Calculable):
         stcd = SMA(self._data, mem=self._mem, column_names=column_names).result
         return stcd
 
+    def __trend__(self):
+        # TODO ADD TREND
+        pass
+
     def __strategy__(self):
         dates = []
         strat = []

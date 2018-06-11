@@ -30,6 +30,10 @@ class ADO(Calculable):
         df.index.name = "Date"
         return df
 
+    def __trend__(self):
+        # TODO ADD TREND
+        pass
+
     def __strategy__(self):
         # TODO ADD STRATEGY
         pass

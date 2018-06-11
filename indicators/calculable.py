@@ -38,3 +38,7 @@ class Calculable(ABC):
     @abstractmethod
     def __strategy__(self):
         pass
+
+    @abstractmethod
+    def __trend__(self):
+        pass
