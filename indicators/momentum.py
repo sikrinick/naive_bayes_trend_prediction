@@ -19,3 +19,7 @@ class Momentum(Calculable):
         df.index.name = "Date"
         return df
 
+    def __strategy__(self):
+        # TODO ADD STRATEGY
+        pass
+

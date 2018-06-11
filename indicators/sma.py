@@ -22,5 +22,5 @@ class SMA(Calculable):
         return df
 
     def __strategy__(self):
-        # No strat
+        # TODO ADD STRATEGY
         pass

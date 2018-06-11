@@ -29,3 +29,7 @@ class ADO(Calculable):
         df = Series(data=values, index=dates)
         df.index.name = "Date"
         return df
+
+    def __strategy__(self):
+        # TODO ADD STRATEGY
+        pass

@@ -26,6 +26,6 @@ class EMA(Calculable):
         return df
 
     def __strategy__(self):
-        # No strategy
+        # TODO ADD STRATEGY
         pass
 

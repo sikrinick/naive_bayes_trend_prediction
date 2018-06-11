@@ -13,3 +13,8 @@ class MACD(Calculable):
         fast_ema = fast_ema.loc[slow_ema.index.values[0]:]
 
         return EMA(slow_ema - fast_ema, self._mem, column_names=ColumnNames(adj_close_str="EMA")).result
+
+    def __strategy__(self):
+        # TODO ADD STRATEGY
+        pass
+
